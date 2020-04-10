@@ -13,12 +13,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "students")
 public class Student {
@@ -38,6 +42,19 @@ public class Student {
     public void prePersist() {
         // You can use the @CreationTimestamp and @UpdateTimestamp attribute annotation
         this.createAt = new Date();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Student)) {
+            return false;
+        }
+        Student a = (Student) o;
+
+        return this.id != null && this.id.equals(a.getId());
     }
 
 }
